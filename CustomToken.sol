@@ -42,7 +42,7 @@ contract CustomToken {
         return true;
     }
 
-    //
+    // Allow contracts to spend tokens on another users behalf
     function transferFrom(address from, address to, uint tokens) public returns (bool) {
         balances[msg.sender] = balances[msg.sender] - tokens;
 
@@ -51,6 +51,15 @@ contract CustomToken {
         balances[to] = balances[to] + tokens;
 
         emit Transfer(msg.sender, to, tokens);
+
+        return true;
+    }
+
+    // Approve the spender to withdraw from your account, multiple times, up to the tokens amount.
+    function approve(address spender, uint tokens) public returns (bool) {
+        allowance[msg.sender][spender] = tokens;
+
+        emit Approval(msg.sender, spender, tokens);
 
         return true;
     }
